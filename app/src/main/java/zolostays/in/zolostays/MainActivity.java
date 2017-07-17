@@ -284,13 +284,12 @@ public class MainActivity extends AppCompatActivity {
 
                 if (recyclerView != null && Integer.parseInt(intent.getStringExtra("pos")) != -1
                         && tidPosition.get(intent.getStringExtra("position")) != null) {
-                    View v = recyclerView.getChildAt(
-                            tidPosition.get(intent.getStringExtra("position")));
-
-                    ProgressBar progressBar = (ProgressBar) v.findViewById(R.id.progressBar);
-                    progressBar.setProgress(Integer.parseInt(intent.getStringExtra("fileProgress")));
-
-
+                    View v = recyclerView.getChildAt(tidPosition.get(intent.getStringExtra("position")));
+                    if (v != null) {
+                        ProgressBar progressBar = (ProgressBar) v.findViewById(R.id.progressBar);
+                        progressBar.setProgress(Integer.parseInt(intent.getStringExtra("fileProgress")));
+                        
+                    }
 
                 }
 
