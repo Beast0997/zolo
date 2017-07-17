@@ -1,94 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:layout_marginTop="10dp"
-    >
-
-    <RelativeLayout
-        android:id="@+id/rlimg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="5dp"
-        android:layout_alignParentLeft="true"
-
-        android:layout_marginLeft="5dp">
-
-
-    <ImageView
-        android:id="@+id/title_img"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/contentDescription"
-
-        />
-
-        <TextView
-            android:id="@+id/progressBarCount"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"/>
-
-
-
-    </RelativeLayout>
-
-    <TextView
-        android:id="@+id/name"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:layout_margin="7dp"
-        android:layout_toRightOf="@+id/rlimg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"/>
-
-
+    android:orientation="vertical"
+    android:weightSum="4">
 
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="5dp"
-        android:layout_alignParentRight="true"
-        android:layout_centerInParent="true" >
-
-        <ProgressBar
-            android:id="@+id/progressBar"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:layout_centerInParent="true"
-            android:background="@drawable/circle_shape"
-            android:indeterminate="false"
-            android:max="100"
-            android:progress="0"
-            android:progressDrawable="@drawable/circular_progress_bar"
-            android:secondaryProgress="0" />
-
-
+        android:layout_height="0dp"
+        android:layout_weight="1.99">
 
         <ImageView
-            android:id="@+id/icon"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_centerHorizontal="true"
-            android:layout_centerInParent="true"
-            android:layout_centerVertical="true"
+            android:id="@+id/title_img"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:contentDescription="@string/contentDescription"
 
             />
 
+
+
+        <RelativeLayout
+
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="14dp"
+            android:layout_marginRight="5dp" >
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+
+                android:layout_marginLeft="10dp"
+                android:indeterminate="false"
+                android:max="100"
+                android:progress="0"
+                android:progressDrawable="@drawable/circular_progress_bar"
+                android:secondaryProgress="0" />
+
+            <ImageView
+                android:id="@+id/icon"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_centerInParent="true"
+                android:visibility="gone"
+                android:contentDescription="@string/contentDescription"
+              />
+        </RelativeLayout>
     </RelativeLayout>
 
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_below="@+id/title_img"
 
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:gravity="center"
+        android:layout_weight="0.29"
+        android:textSize="16sp"
+        android:textStyle="normal" />
 
-
-
-</RelativeLayout>
+</LinearLayout>

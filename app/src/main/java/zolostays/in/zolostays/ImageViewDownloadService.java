@@ -158,6 +158,8 @@ public class ImageViewDownloadService  extends IntentService{
         broadcastIntent.putExtra("fileDownloaded",downloaded);
         broadcastIntent.putExtra("fileProgress",String.valueOf(progressCount));
         broadcastIntent.putExtra("message", message);
+
+
         broadcastIntent.setAction("in.zolo.intent.action.DATA_PROCESS_IMAGE_RESPONSE");
         broadcastIntent.addCategory(Intent.CATEGORY_DEFAULT);
         sendBroadcast(broadcastIntent);
