@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
 
         listBean = new ListBean("101","Goku" , "http://wallpapercave.com/wp/n87jcGU.jpg");
         itemLisTArray.add(listBean);
-        tidPosition.put("101" ,1);
+        tidPosition.put("101" , 1);
 
 
         listBean = new ListBean("102","Pikachu" , "http://wallpapercave.com/wp/k1ExYwj.jpg");
@@ -206,12 +206,12 @@ public class MainActivity extends AppCompatActivity {
             Bitmap noimg = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_no_image);
            holder.Name.setText(itembean.getTitle());
             holder.image.setImageBitmap(noimg);
-            PATH = Environment.getExternalStorageDirectory() + "/zolo"+"/image/"+itembean.getTitle() + itembean.getId() + position;
+            PATH = Environment.getExternalStorageDirectory() + "/zolo"+"/image";
             File file = new File(PATH);
             //holder.Name.setText(String.valueOf(file));
             if (file.exists()){
                 Toast.makeText(getApplicationContext() , String.valueOf(file.exists()) ,Toast.LENGTH_SHORT).show();
-                Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+                Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath() + "/" + itembean.getTitle() + itembean.getId() + position);
 
                 Log.d("ImageBitmap"  , String.valueOf(bitmap));
                 holder.image.setImageBitmap(bitmap);
@@ -262,9 +262,7 @@ public class MainActivity extends AppCompatActivity {
             try {
                 if (!intent.getStringExtra("message").isEmpty())
                     Toast.makeText(getApplicationContext(), intent.getStringExtra("message") , Toast.LENGTH_SHORT).show();
-                if (mAdapter != null && intent.getBooleanExtra("fileDownloaded", false)
-                        && Integer.parseInt(intent.getStringExtra("position")) != -1)
-                    mAdapter.notifyDataSetChanged();
+             
                 if (recyclerView != null && tidPosition.get(intent.getStringExtra("position")) != null) {
 
                     View v = recyclerView.getChildAt(tidPosition.get(intent.getStringExtra("position")));
@@ -272,6 +270,10 @@ public class MainActivity extends AppCompatActivity {
                     final TextView progressBarCount = (TextView) v.findViewById(R.id.progressBarCount);
                     progressBarCount.setText(intent.getStringExtra("fileProgress"));
                     progressBar.setProgress(Integer.parseInt(intent.getStringExtra("fileProgress")));
+                    if (Integer.parseInt(intent.getStringExtra("fileProgress")) == 100){
+                        progressBarCount.setVisibility(View.GONE);
+                        progressBar.setVisibility(View.GONE);
+                    }
                 }
 
             }catch (Exception ex){

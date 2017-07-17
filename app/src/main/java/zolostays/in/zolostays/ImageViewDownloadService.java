@@ -72,14 +72,10 @@ public class ImageViewDownloadService  extends IntentService{
 
     private void startDownloadImage(String urlpath ,String clickedItemId , String pos)  {
 
-
-
         try{
-            System.out.println("doin background" + urlpath);
+
 
             int lenghtOfFile = 0;
-
-
             HttpGet httpPost = new HttpGet();
             URI website = new URI(urlpath.trim());
             httpPost.setURI(website);
@@ -95,8 +91,6 @@ public class ImageViewDownloadService  extends IntentService{
             HttpEntity entity = httpResponse.getEntity();
             String imgResponseCode = String.valueOf(responseCode);
 
-            System.out.println("Lenght of file CODE: " + responseCode);
-            System.out.println("Lenght of file Res val: " + message);
             String app_name =  name + clickedItemId + pos ;
             if (entity != null) {
 
@@ -123,40 +117,38 @@ public class ImageViewDownloadService  extends IntentService{
                     if (lenghtOfFile > 0){
                         //publishProgress((int) ((total * 100) / lenghtOfFile));
                         int progress = (int) ((total * 100) / lenghtOfFile);
-                        imagedownlodRecevier(progress,false,"",false);
+                        imagedownlodRecevier(progress,false,"");
                     }else{
                         //publishProgress((int) ((total)));
                         int progress = (int) ((total));
-                        imagedownlodRecevier(progress,false,"",false);
+                        imagedownlodRecevier(progress,false,"");
                     }
                     fos.write(buffer, 0, len1); // Write In
                     // FileOutputStream.
                 }
-                imagedownlodRecevier(100,false,"",false);
+                imagedownlodRecevier(100,false,"");
 
                 fos.close();
                 is.close();
             }
 
-            System.out.println("previous onpost");
-            if (imgResponseCode.equals(Status.SUCCESS)) {
-                imagedownlodRecevier(100,true,"Image downloaded.",false);
-            } else {
-                imagedownlodRecevier(0,true,"Network error. Image not downloaded.",false);
-
+            if (imgResponseCode.equals(Status.SUCCESS)){
+                imagedownlodRecevier(100,true,"Image downloaded.");
+            }else {
+                imagedownlodRecevier(0,false,"Network error. Image not downloaded.");
             }
 
 
         }catch(Exception e){
            // imagedownlodRecevier(-1,true, String.valueOf(e.getMessage()),false);
-            imagedownlodRecevier(0,true,"Network error. Image not downloaded. ",false);
+            imagedownlodRecevier(0,false,"Network error. Image not downloaded. ");
         }
 
 
 
     }
 
-    private void imagedownlodRecevier(int progressCount,boolean downloaded,String message,boolean fullyDownloade) {
+    private void imagedownlodRecevier(int progressCount,boolean downloaded,String message) {
 
 
         Intent broadcastIntent = new Intent();
@@ -166,7 +158,6 @@ public class ImageViewDownloadService  extends IntentService{
         broadcastIntent.putExtra("fileDownloaded",downloaded);
         broadcastIntent.putExtra("fileProgress",String.valueOf(progressCount));
         broadcastIntent.putExtra("message", message);
-        broadcastIntent.putExtra("fileUnZiped",fullyDownloade);
         broadcastIntent.setAction("in.zolo.intent.action.DATA_PROCESS_IMAGE_RESPONSE");
         broadcastIntent.addCategory(Intent.CATEGORY_DEFAULT);
         sendBroadcast(broadcastIntent);
