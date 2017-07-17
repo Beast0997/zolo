@@ -73,99 +73,6 @@ public class ImageViewDownloadService  extends IntentService{
     private void startDownloadImage(String urlpath ,String clickedItemId , String pos)  {
 
 
-       /* try {
-            BufferedInputStream inputfile;
-            Long downloadedSize = null;
-            long fileLength;
-            URL url = new URL(src);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            File file = new File(getExternalFilesDir("Zolo"), "/Image");
-            RandomAccessFile output;
-
-            if (file.exists()){
-                System.out.print("progressCount file" + String.valueOf(file.exists()));
-                connection.setAllowUserInteraction(true);
-                connection.setRequestProperty("Range", "bytes=" + file.length() + "-");
-            }else{
-                System.out.print("progressCount file" + "No");
-            }
-
-            connection.setConnectTimeout(14000);
-            connection.setReadTimeout(20000);
-            connection.connect();
-            System.out.print("progressCount downloadedSize" + connection.getResponseCode());
-            System.out.print("progressCount downloadedSize" + connection.getResponseCode());
-            if (connection.getResponseCode() / 100 != 2)
-                throw new Exception("Invalid response code!");
-
-            else {
-                String connectionField = connection.getHeaderField("content-range");
-
-
-                if (connectionField != null){
-                    String[] connectionRanges = connectionField.substring("bytes=".length()).split("-");
-                    downloadedSize = Long.valueOf(connectionRanges[0]);
-                    System.out.print("progressCount downloadedSize" + String.valueOf(downloadedSize));
-                }
-
-                if (connectionField == null && file.exists())
-                    file.delete();
-
-                fileLength = connection.getContentLength();
-
-                imagedownlodRecevier(fileLength,true , 0);
-                inputfile = new BufferedInputStream(connection.getInputStream());
-                output = new RandomAccessFile(file, "rw");
-                output.seek(fileLength);
-                System.out.print("progressCount downloadedSize" + downloadedSize);
-                if (!file.exists()) {
-                    file.mkdirs();
-                }
-
-
-
-                byte data[] = new byte[1024];
-                int count = 0;
-                int __progress = 0;
-
-                while ((count = inputfile.read(data, 0, 1024)) != -1
-                        && __progress != 100) {
-                    downloadedSize += count;
-                    output.write(data, 0, count);
-                    __progress = (int) ((downloadedSize * 100) / fileLength);
-                    System.out.print("progressCount " + __progress);
-                    imagedownlodRecevier(fileLength,false, __progress);
-                }
-
-             *//*   byte[] buffer = new byte[1024];
-                int len1 = 0;
-                long total = 0;
-                while ((len1 = is.read(buffer)) != -1) {
-                    total += 1024;
-                    if (lenghtOfFile > 0){
-                        //publishProgress((int) ((total * 100) / lenghtOfFile));
-                        int progress = (int) ((total * 100) / lenghtOfFile);
-                        imagedownlodRecevier(progress,false,"",false);
-                    }else{
-                        //publishProgress((int) ((total)));
-                        int progress = (int) ((total));
-                        imagedownlodRecevier(progress,false,"",false);
-                    }
-                    fos.write(buffer, 0, len1); // Write In
-                    // FileOutputStream.
-                }*//*
-
-                output.close();
-                inputfile.close();
-            }
-
-
-        }catch (Exception e) {
-            e.printStackTrace();
-            System.out.printf("Exception", e.getMessage());
-
-        }*/
-
 
         try{
             System.out.println("doin background" + urlpath);
@@ -196,7 +103,7 @@ public class ImageViewDownloadService  extends IntentService{
                 lenghtOfFile = (int) entity.getContentLength();
                 System.out.println("Lenght of file: " + lenghtOfFile);
 
-                File file = new File(getExternalFilesDir("Zolo"), "/image");
+                File file = new File(getExternalFilesDir("Zolo"), "/image/");
 
 
                 if (!file.exists()) {
@@ -225,26 +132,24 @@ public class ImageViewDownloadService  extends IntentService{
                     fos.write(buffer, 0, len1); // Write In
                     // FileOutputStream.
                 }
-                imagedownlodRecevier(1500000,false,"",false);
-                fos.flush();
+                imagedownlodRecevier(100,false,"",false);
+
                 fos.close();
                 is.close();
             }
 
             System.out.println("previous onpost");
             if (imgResponseCode.equals(Status.SUCCESS)) {
-                imagedownlodRecevier(-1,true,"Image downloaded.",false);
+                imagedownlodRecevier(100,true,"Image downloaded.",false);
             } else {
-                imagedownlodRecevier(-1,true,"Network error. Image not downloaded. 111",false);
-
-                //ToastUserMessage.message(this, "Network error. Training not downloaded.");
+                imagedownlodRecevier(0,true,"Network error. Image not downloaded.",false);
 
             }
-            System.out.println("onpost");
+
 
         }catch(Exception e){
            // imagedownlodRecevier(-1,true, String.valueOf(e.getMessage()),false);
-            imagedownlodRecevier(-1,true,"Network error. Image not downloaded.  2222",false);
+            imagedownlodRecevier(0,true,"Network error. Image not downloaded. ",false);
         }
 
 
@@ -252,7 +157,6 @@ public class ImageViewDownloadService  extends IntentService{
     }
 
     private void imagedownlodRecevier(int progressCount,boolean downloaded,String message,boolean fullyDownloade) {
-        //System.out.println("train zip reciver invoke>>>");
 
 
         Intent broadcastIntent = new Intent();

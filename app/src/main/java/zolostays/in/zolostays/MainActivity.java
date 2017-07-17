@@ -204,16 +204,15 @@ public class MainActivity extends AppCompatActivity {
         public void onBindViewHolder(MyViewHolder holder, final int position) {
             final ListBean itembean = itemList.get(position);
             Bitmap noimg = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_no_image);
-            holder.Name.setText(itembean.getTitle());
+           holder.Name.setText(itembean.getTitle());
             holder.image.setImageBitmap(noimg);
             PATH = Environment.getExternalStorageDirectory() + "/zolo"+"/image/"+itembean.getTitle() + itembean.getId() + position;
             File file = new File(PATH);
+            //holder.Name.setText(String.valueOf(file));
             if (file.exists()){
                 Toast.makeText(getApplicationContext() , String.valueOf(file.exists()) ,Toast.LENGTH_SHORT).show();
                 Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
-                //System.out.println("blog im path>>"+allBeans.get(0).getImage()+">>hash>>"+filename);
-                //	ImageLoader imageLoader = new ImageLoader(this, folderDir.getPath());
-                //imageLoader.DisplayImage(allBeans.get(0).getImage(),blogImage,400);
+
                 Log.d("ImageBitmap"  , String.valueOf(bitmap));
                 holder.image.setImageBitmap(bitmap);
 
